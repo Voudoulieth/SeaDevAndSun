@@ -1,0 +1,5 @@
+-- Active: 1720537966816@@127.0.0.1@5432@postgres
+CREATE DATABASE seadev;
+
+Create USER "Admin" WITH PASSWORD  'AdminSea';
+ALTER USER "Admin" WITH SUPERUSER;
