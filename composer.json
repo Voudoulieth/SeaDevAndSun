@@ -1,0 +1,19 @@
+{
+    "name": "alexandre/seadevandsun",
+    "description": "A web project",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Alexandre\\Seadevandsun\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lucian",
+            "email": "Lucianlaffont31@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
