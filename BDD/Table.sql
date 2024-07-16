@@ -4,24 +4,18 @@
 DROP TABLE IF EXISTS _CommentaireToTicket;
 DROP TABLE IF EXISTS Commentaire;
 DROP TABLE IF EXISTS Ticket;
-DROP TABLE IF EXISTS Client;
 DROP TABLE IF EXISTS Utilisateur;
 
 
 CREATE Table Utilisateur(
     ID_user SERIAL PRIMARY KEY,
-    identifiant_utilisateur VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(15) NOT NULL
-);
-
-CREATE TABLE Client(
-    ID_client SERIAL PRIMARY KEY,
     Nom VARCHAR(50) NOT NULL,
     Prenom VARCHAR(20),
     email VARCHAR(255) NOT NULL UNIQUE,
-    ID_user INTEGER NOT NULL,
-    Foreign Key (ID_user) REFERENCES Utilisateur (ID_user) ON UPDATE CASCADE ON DELETE CASCADE
+    password VARCHAR(15) NOT NULL,
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE
 );
+
 
 CREATE Table Commentaire(
     ID_commentaire SERIAL PRIMARY KEY,
