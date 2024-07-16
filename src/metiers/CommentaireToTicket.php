@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace seadevandsun\metier;
+namespace seadev\metier;
 
 
 class CommentaireToTicket {
