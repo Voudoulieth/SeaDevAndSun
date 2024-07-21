@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-// require_once 'E:/Alexandre/Projet web/SeaDevAndSun/vendor/autoload.php';
+// require './vendor/autoload.php';
 require_once 'E:\Alexandre\Projet web\SeaDevAndSun\src\metiers\Utilisateur.php';
 require_once 'E:\Alexandre\Projet web\SeaDevAndSun\src\metiers\Admin.php';
 
