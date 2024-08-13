@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace seadev\dao;
+namespace Seadev\Dao;
 
 
 class DaoException extends \Exception {

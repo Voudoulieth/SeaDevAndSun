@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace seadev\dao;
+namespace Seadev\Dao;
 
 class Database {
     private static \PDO $db;
@@ -8,7 +8,7 @@ class Database {
     public static function getConnection() : \PDO {
         if (!isset(self::$db)) {
             // Utilisation de __DIR__ pour obtenir le chemin du répertoire actuel de Database.php
-            $paramIniPath = __DIR__ . '/param.ini';
+            $paramIniPath = (__DIR__) . '/param.ini';
             // echo "Path to param.ini: $paramIniPath<br>";
 
             if (file_exists($paramIniPath)) {

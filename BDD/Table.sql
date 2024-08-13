@@ -1,41 +1,67 @@
 -- Active: 1720539271019@@127.0.0.1@5432@seadev
 
 
-DROP TABLE IF EXISTS _CommentaireToTicket;
-DROP TABLE IF EXISTS Commentaire;
-DROP TABLE IF EXISTS Ticket;
-DROP TABLE IF EXISTS Utilisateur;
+DROP TABLE IF EXISTS piecejointe;
+DROP TABLE IF EXISTS commentaire;
+DROP TABLE IF EXISTS ticket;
+DROP TABLE IF EXISTS raison;
+DROP TABLE IF EXISTS status;
+DROP TABLE IF EXISTS utilisateur;
 
 
-CREATE Table Utilisateur(
-    ID_user SERIAL PRIMARY KEY,
-    Nom VARCHAR(50) NOT NULL,
-    Prenom VARCHAR(20),
+CREATE TABLE utilisateur(
+    id_utilisateur SERIAL PRIMARY KEY,
+    nom VARCHAR(50) NOT NULL,
+    prenom VARCHAR(50) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(15) NOT NULL,
-    is_admin BOOLEAN NOT NULL DEFAULT FALSE
+    password TEXT NOT NULL, -- Stockage du mot de passe haché
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
-CREATE Table Commentaire(
-    ID_commentaire SERIAL PRIMARY KEY,
-    C_text TEXT,
-    C_pj VARCHAR(255)
+CREATE TABLE status(
+    id_status SERIAL PRIMARY KEY,
+    nom_status VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE Ticket(
-    ID_Ticket SERIAL PRIMARY KEY,
-    Piece_jointe VARCHAR(255),
-    Demande_ticket TEXT NOT NULL,
-    Raison_ticket VARCHAR(50) NOT NULL,
-    Status_ticket VARCHAR(50) NOT NULL,
-    ID_user INTEGER NOT NULL,
-    Foreign Key (ID_user) REFERENCES Utilisateur (ID_user) ON UPDATE CASCADE ON DELETE CASCADE
+CREATE TABLE raison(
+    id_raison SERIAL PRIMARY KEY,
+    nom_raison VARCHAR(50) NOT NULL UNIQUE,
+    icone_raison VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE Table _CommentaireToTicket(
-    ID_commentaire INTEGER NOT NULL,
-    ID_ticket INTEGER NOT NULL,
-    Foreign Key (ID_commentaire) REFERENCES Commentaire (ID_commentaire) ON UPDATE CASCADE ON DELETE CASCADE,
-    Foreign Key (ID_ticket) REFERENCES Ticket (ID_Ticket) ON UPDATE CASCADE ON DELETE CASCADE
+CREATE TABLE ticket(
+    id_ticket SERIAL PRIMARY KEY,
+    demande_ticket TEXT NOT NULL,
+    id_utilisateur INTEGER NOT NULL,
+    id_status INTEGER NOT NULL,
+    id_raison INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_status) REFERENCES status (id_status) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_utilisateur) REFERENCES utilisateur (id_utilisateur) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_raison) REFERENCES raison (id_raison) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE commentaire(
+    id_commentaire SERIAL PRIMARY KEY,
+    c_contenu TEXT NOT NULL,
+    id_ticket INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_ticket) REFERENCES ticket (id_ticket) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE piecejointe(
+    id_pj SERIAL PRIMARY KEY,
+    adresse_pj VARCHAR(255) NOT NULL,
+    id_ticket INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_ticket) REFERENCES ticket (id_ticket) ON UPDATE CASCADE ON DELETE CASCADE
 );

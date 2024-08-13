@@ -1,30 +1,36 @@
--- Active: 1720539271019@@127.0.0.1@5432@seadev@public
--- Insertion des utilisateurs
-INSERT INTO Utilisateur (identifiant_utilisateur, password) VALUES 
-('user1', 'password1'),
-('user2', 'password2'),
-('user3', 'password3');
+-- Insérer des utilisateurs avec IDs explicites
+INSERT INTO utilisateur (id_utilisateur, nom, prenom, email, password, is_admin) VALUES
+(1, 'Dupont', 'Jean', 'jean.dupont@example.com', 'hashed_password1', FALSE),
+(2, 'Martin', 'Lucie', 'lucie.martin@example.com', 'hashed_password2', TRUE),
+(3, 'Durand', 'Pierre', 'pierre.durand@example.com', 'hashed_password3', FALSE);
 
--- Insertion des clients
-INSERT INTO Client (Nom, Prenom, email, ID_user) VALUES 
-('Doe', 'John', 'john.doe@example.com', 1),
-('Smith', 'Jane', 'jane.smith@example.com', 2),
-('Brown', 'Charlie', 'charlie.brown@example.com', 3);
+-- Insérer des statuts avec IDs explicites
+INSERT INTO status (id_status, nom_status) VALUES
+(1, 'Ouvert'),
+(2, 'En cours'),
+(3, 'Fermé');
 
--- Insertion des commentaires
-INSERT INTO Commentaire (C_text, C_pj) VALUES 
-('This is the first comment.', 'file1.png'),
-('This is the second comment.', 'file2.jpg'),
-('This is the third comment.', NULL);
+-- Insérer des raisons avec IDs explicites
+INSERT INTO raison (id_raison, nom_raison, icone_raison) VALUES
+(1, 'Bug', '/path/to/bug_icon.png'),
+(2, 'Demande de fonctionnalité', '/path/to/feature_request_icon.png'),
+(3, 'Support', '/path/to/support_icon.png'),
+(4, 'Autre', '/path/to/other_icon.png');
 
--- Insertion des tickets
-INSERT INTO Ticket (Piece_jointe, Demande_ticket, Raison_ticket, Status_ticket, ID_user) VALUES 
-('attachment1.pdf', 'I need help with my account.', 'Account Issue', 'Open', 1),
-('attachment2.docx', 'The application is not working.', 'Technical Issue', 'In Progress', 2),
-('attachment3.zip', 'I have a billing question.', 'Billing Issue', 'Closed', 3);
+-- Insérer des tickets avec IDs explicites
+INSERT INTO ticket (id_ticket, demande_ticket, id_utilisateur, id_status, id_raison) VALUES
+(1, 'Problème de connexion à la base de données', 1, 1, 1),
+(2, 'Ajout d/une fonctionnalité de recherche avancée', 2, 2, 2),
+(3, 'Assistance pour configuration de l\environnement', 3, 3, 3);
 
--- Association des commentaires aux tickets
-INSERT INTO _CommentaireToTicket (ID_commentaire, ID_ticket) VALUES 
-(1, 1),
-(2, 2),
-(3, 3);
+-- Insérer des commentaires avec IDs explicites
+INSERT INTO commentaire (id_commentaire, c_contenu, id_ticket) VALUES
+(1, 'Ce problème semble être lié à une configuration incorrecte.', 1),
+(2, 'La fonctionnalité a été partiellement implémentée.', 2),
+(3, 'Merci pour l\aide, tout fonctionne maintenant.', 3);
+
+-- Insérer des pièces jointes avec IDs explicites
+INSERT INTO piecejointe (id_pj, adresse_pj, id_ticket) VALUES
+(1, '/uploads/db_error_screenshot.png', 1),
+(2, '/uploads/search_feature_design.pdf', 2),
+(3, '/uploads/config_guide.pdf', 3);

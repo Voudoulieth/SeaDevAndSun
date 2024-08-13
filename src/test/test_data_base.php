@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
-namespace seav\test;
+namespace Seadev\Test;
 
-use seadev\dao\Database;
-use seadev\dao\DaoException;
+use Seadev\Dao\Database;
+use Seadev\Dao\DaoException;
 // Faire une requête pour vérifier si la connexion à la BDD fonctionne
 // d'abord faire la connexion
 require __DIR__ . '/../dao/Database.php';

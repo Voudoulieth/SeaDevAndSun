@@ -1,6 +1,6 @@
 <?php 
 declare(strict_types=1);
-namespace seadev\metier;
+namespace Seadev\Metier;
 
 
 class Ticket {

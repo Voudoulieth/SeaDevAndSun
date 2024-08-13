@@ -1,66 +1,87 @@
--- Active: 1720539271019@@127.0.0.1@5432@seadev@public
--- Insertion des utilisateurs avec des identifiants uniques et mots de passe valides
-INSERT INTO Utilisateur (identifiant_utilisateur, password) VALUES 
-('john_doe', 'password1'),
-('jane_smith', 'password2'),
-('charlie_brown', 'password3');
+-- Insertion valide
+INSERT INTO utilisateur (id_utilisateur, nom, prenom, email, password, is_admin) VALUES
+(4, 'Lemoine', 'Sophie', 'sophie.lemoine@example.com', 'hashed_password4', FALSE);
 
--- Test d'insertion d'un utilisateur avec un identifiant trop long (doit échouer)
--- Le texte ci-dessous contient exactement 256 caractères.
-INSERT INTO Utilisateur (identifiant_utilisateur, password) VALUES 
-('identifiant_trop_long_identifiant_trop_long_identifiant_trop_long_identifiant_trop_long_identifiant_trop_long_identifiant_trop_long_identifiant_trop_long_identifiant_trop_long_identifiant_trop_long_identifiant_trop_long_identifiant_trop_long_identifiant_trop_long_', 'password4'); -- invalide
+-- Insertion invalide : doublon d'email
+INSERT INTO utilisateur (id_utilisateur, nom, prenom, email, password, is_admin) VALUES
+(5, 'Dupuis', 'Marc', 'jean.dupont@example.com', 'hashed_password5', FALSE);
 
--- Test d'insertion d'un utilisateur avec un mot de passe trop long (doit échouer)
-INSERT INTO Utilisateur (identifiant_utilisateur, password) VALUES 
-('short_identifiant', 'motdepassetreslongmotdepassetreslong'); -- invalide
+-- Insertion invalide : violation de la contrainte NOT NULL (nom NULL)
+INSERT INTO utilisateur (id_utilisateur, nom, prenom, email, password, is_admin) VALUES
+(6, NULL, 'Paul', 'paul.dupont@example.com', 'hashed_password6', FALSE);
 
--- Insertion des clients avec des noms, prénoms et emails valides
-INSERT INTO Client (Nom, Prenom, email, ID_user) VALUES 
-('Doe', 'John', 'john.doe@example.com', 1), -- valide
-('Smith', 'Jane', 'jane.smith@example.com', 2), -- valide
-('Brown', 'Charlie', 'charlie.brown@example.com', 3); -- valide
+-- Insertion invalide : violation de la contrainte NOT NULL (email NULL)
+INSERT INTO utilisateur (id_utilisateur, nom, prenom, email, password, is_admin) VALUES
+(7, 'Giraud', 'Marie', NULL, 'hashed_password7', FALSE);
 
--- Test de doublon d'email (doit échouer)
-INSERT INTO Client (Nom, Prenom, email, ID_user) VALUES 
-('Duplicate', 'Email', 'john.doe@example.com', 1); -- invalide
+-- Insertion valide
+INSERT INTO status (id_status, nom_status) VALUES
+(4, 'En attente');
 
--- Test de clé étrangère non existante (doit échouer)
-INSERT INTO Client (Nom, Prenom, email, ID_user) VALUES 
-('Invalid', 'User', 'invalid.user@example.com', 99); -- invalide
+-- Insertion invalide : violation de la contrainte NOT NULL (nom_status NULL)
+INSERT INTO status (id_status, nom_status) VALUES
+(5, NULL);
 
--- Insertion des commentaires avec des textes et pièces jointes valides
-INSERT INTO Commentaire (C_text, C_pj) VALUES 
-('This is a comment with attachment.', 'attachment1.png'), -- valide
-('This is a comment without attachment.', NULL), -- valide
-('This is another comment with attachment.', 'attachment2.jpg'); -- valide
+-- Insertion invalide : duplication d'ID
+INSERT INTO status (id_status, nom_status) VALUES
+(1, 'Réouvert');
 
--- Test d'insertion d'un commentaire avec un texte très long (doit échouer)
--- Le texte ci-dessous contient exactement 256 caractères.
-INSERT INTO Commentaire (C_text, C_pj) VALUES 
-('aaa', 'texte_tres_long_texte_tres_long_texte_tres_long_texte_tres_long_texte_tres_long_texte_tres_long_texte_tres_long_texte_tres_long_texte_tres_long_texte_tres_long_texte_tres_long_texte_tres_long_texte_tres_long_texte_tres_long_texte_tres_long_texte_tres_long_.png'); -- invalide
+-- Insertion valide
+INSERT INTO raison (id_raison, nom_raison, icone_raison) VALUES
+(5, 'Maintenance', '/path/to/maintenance_icon.png');
 
--- Insertion des tickets avec des pièces jointes, demandes, raisons, statuts et utilisateurs valides
-INSERT INTO Ticket (Piece_jointe, Demande_ticket, Raison_ticket, Status_ticket, ID_user) VALUES 
-('attachment1.pdf', 'Help with my account.', 'Account Issue', 'Open', 1), -- valide
-('attachment2.docx', 'Application not working.', 'Technical Issue', 'In Progress', 2), -- valide
-('attachment3.zip', 'Billing question.', 'Billing Issue', 'Closed', 3); -- valide
+-- Insertion invalide : violation de l'unicité de nom_raison
+INSERT INTO raison (id_raison, nom_raison, icone_raison) VALUES
+(6, 'Bug', '/path/to/new_bug_icon.png');
 
--- Test de clé étrangère non existante pour les tickets (doit échouer)
-INSERT INTO Ticket (Piece_jointe, Demande_ticket, Raison_ticket, Status_ticket, ID_user) VALUES 
-('invalid_attachment.pdf', 'Invalid user.', 'Other Issue', 'Open', 99); -- invalide
+-- Insertion invalide : violation de l'unicité de icone_raison
+INSERT INTO raison (id_raison, nom_raison, icone_raison) VALUES
+(7, 'Nouvelle Raison', '/path/to/bug_icon.png');
 
--- Test d'insertion de ticket avec un identifiant de catégorie non existant (doit échouer)
-INSERT INTO Ticket (Piece_jointe, Demande_ticket, Raison_ticket, Status_ticket, ID_user, ID_categorie) VALUES 
-('attachment4.pdf', 'Invalid category.', 'Other Issue', 'Open', 1, 99); -- invalide
+-- Insertion invalide : violation de la contrainte NOT NULL (icone_raison NULL)
+INSERT INTO raison (id_raison, nom_raison, icone_raison) VALUES
+(8, 'Test Raisons', NULL);
 
--- Association des commentaires aux tickets avec des clés étrangères valides
-INSERT INTO _CommentaireToTicket (ID_commentaire, ID_ticket) VALUES 
-(1, 1), -- valide
-(2, 2), -- valide
-(3, 3); -- valide
+-- Insertion valide
+INSERT INTO ticket (id_ticket, demande_ticket, id_utilisateur, id_status, id_raison) VALUES
+(4, 'Demande d\amélioration de la sécurité', 1, 2, 2);
 
--- Test de clé étrangère non existante pour l'association des commentaires aux tickets (doit échouer)
-INSERT INTO _CommentaireToTicket (ID_commentaire, ID_ticket) VALUES 
-(99, 1); -- invalide
-INSERT INTO _CommentaireToTicket (ID_commentaire, ID_ticket) VALUES 
-(1, 99); -- invalide
+-- Insertion invalide : clé étrangère id_utilisateur non valide
+INSERT INTO ticket (id_ticket, demande_ticket, id_utilisateur, id_status, id_raison) VALUES
+(5, 'Problème d\authentification', 99, 1, 1);
+
+-- Insertion invalide : clé étrangère id_status non valide
+INSERT INTO ticket (id_ticket, demande_ticket, id_utilisateur, id_status, id_raison) VALUES
+(6, 'Erreur lors de l\importation de données', 2, 99, 1);
+
+-- Insertion invalide : clé étrangère id_raison non valide
+INSERT INTO ticket (id_ticket, demande_ticket, id_utilisateur, id_status, id_raison) VALUES
+(7, 'Problème de performance', 2, 1, 99);
+
+-- Insertion invalide : violation de la contrainte NOT NULL (demande_ticket NULL)
+INSERT INTO ticket (id_ticket, demande_ticket, id_utilisateur, id_status, id_raison) VALUES
+(8, NULL, 2, 1, 1);
+
+-- Insertion valide
+INSERT INTO commentaire (id_commentaire, c_contenu, id_ticket) VALUES
+(4, 'Je pense que c\'est un problème mineur.', 1);
+
+-- Insertion invalide : clé étrangère id_ticket non valide
+INSERT INTO commentaire (id_commentaire, c_contenu, id_ticket) VALUES
+(5, 'Pas sûr de la cause exacte.', 99);
+
+-- Insertion invalide : violation de la contrainte NOT NULL (c_contenu NULL)
+INSERT INTO commentaire (id_commentaire, c_contenu, id_ticket) VALUES
+(6, NULL, 2);
+
+-- Insertion valide
+INSERT INTO piecejointe (id_pj, adresse_pj, id_ticket) VALUES
+(4, '/uploads/security_update.pdf', 4);
+
+-- Insertion invalide : clé étrangère id_ticket non valide
+INSERT INTO piecejointe (id_pj, adresse_pj, id_ticket) VALUES
+(5, '/uploads/invalid_ticket.pdf', 99);
+
+-- Insertion invalide : violation de la contrainte NOT NULL (adresse_pj NULL)
+INSERT INTO piecejointe (id_pj, adresse_pj, id_ticket) VALUES
+(6, NULL, 1);
