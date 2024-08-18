@@ -4,11 +4,16 @@ use Seadev\Dao\Database;
 use Seadev\App\Auth;
 use Seadev\Dao\DaoException;
 
+session_start();
+
 if (!empty($_POST)) {
     try {
         $pdo = Database::getConnection();
         $auth = new Auth($pdo);
         $user = $auth->loggin($_POST['email'], $_POST['password']);
+        // if($user) {
+        //     header('Location: index.php');
+        // }
         
         if ($user !== null) {
             echo "Connexion réussie pour l'utilisateur : " . $user;

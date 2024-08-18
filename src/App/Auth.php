@@ -16,7 +16,18 @@ class Auth {
 
     public function user()
     {
-
+        if(session_status() === PHP_SESSION_NONE)
+            {
+                session_start();
+            }
+        $id = $_SESSION['auth'] = $userData['id_utilisateur'] ?? null;
+        if($id === null){
+            return null;
+            }
+            $query = $this->pdo->prepare('SELECT * FROM Utilisateur WHERE id = ?');
+            $query->execute([$id]);
+            $userData = $query->fetch(PDO::FETCH_ASSOC);
+            return $userData ?: null;
     }
 
     public function loggin(string $username, string $password): ?Utilisateur
@@ -35,12 +46,15 @@ class Auth {
     
     // Vérifier si le mot de passe est correct
     if (password_verify($password, $userData['password'])) {
-        session_start();
-        $_SESSION['auth'] = $userData['id_user'];
+        if(session_status() === PHP_SESSION_NONE)
+            {
+                session_start();
+            }
+        $_SESSION['auth'] = $userData['id_utilisateur'];
         
         // Création d'un objet Utilisateur avec les données
         return new Utilisateur(
-            (int)$userData['id_user'],
+            (int)$userData['id_utilisateur'],
             $userData['nom'],
             $userData['prenom'],
             $userData['email'],

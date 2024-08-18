@@ -6,6 +6,10 @@ if (!empty($_POST)) {
     try {
         // Connexion à la base de données
         $pdo = Database::getConnection();
+
+        // Vérifier la synchronisation de la database
+        $pdo->query("SELECT setval(pg_get_serial_sequence('utilisateur', 'id_utilisateur'), COALESCE(MAX(id_utilisateur), 1)) FROM utilisateur");
+
         
         // Récupération des données du formulaire
         $nom = $_POST['nom'];
@@ -20,7 +24,7 @@ if (!empty($_POST)) {
         $isAdmin = isset($_POST['is_admin']) ? true : false;
         
         // Insertion de l'utilisateur dans la base de données
-        $query = $pdo->prepare('INSERT INTO Utilisateur (Nom, Prenom, email, password, is_admin) VALUES (:nom, :prenom, :email, :password, :is_admin)');
+        $query = $pdo->prepare('INSERT INTO Utilisateur (nom, prenom, email, password, is_admin) VALUES (:nom, :prenom, :email, :password, :is_admin)');
         $query->execute([
             'nom' => $nom,
             'prenom' => $prenom,
@@ -44,7 +48,7 @@ if (!empty($_POST)) {
 </head>
 <body>
     <div>
-        <form action="" method="post">
+        <form action="#" method="post">
             <div>
                 <input type="text" name="nom" placeholder="Nom" required>
             </div>
