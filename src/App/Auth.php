@@ -49,7 +49,7 @@ class Auth {
             );
         }
 
-    public function loggin(string $username, string $password): ?Utilisateur
+    public function login(string $username, string $password): ?Utilisateur
         {
             $query = $this->pdo->prepare('SELECT * FROM Utilisateur WHERE email = :email');
             $query->execute(['email' => $username]);

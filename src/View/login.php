@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // require 'E:\Alexandre\Projet web\SeaDevAndSun\vendor\autoload.php';
 // use Seadev\Dao\Database;
 // use Seadev\App\Auth;
@@ -31,7 +35,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Votre page de connexion"/>
-    <link rel="stylesheet" href="/Css/login.css">
+    <link rel="stylesheet" href="../../Css/login.css">
     <title>Connexion</title>
 </head>
 <body>
@@ -40,7 +44,7 @@ session_start();
             <div class="main_screen_title">
                 <h1>SEA DEV AND SUN</h1>
             </div>
-            <form action="#" method="post">
+            <form action="/login" method="post">
                 <div class="input-group">
                     <label for="email" class="hidden">Email :</label>
                     <input type="email" name="email" placeholder="Votre email" required>

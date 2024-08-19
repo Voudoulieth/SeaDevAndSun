@@ -1,10 +1,14 @@
 <?php
 namespace Seadev\Controller;
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 
 use Seadev\App\Auth;
 
-class AdminController {
-
+class AdminController
+{
     private Auth $auth;
 
     public function __construct(Auth $auth)
@@ -18,6 +22,7 @@ class AdminController {
         $this->auth->requireAdmin();
 
         // Afficher la vue du tableau de bord admin
-        require '../views/admin/dashboard.php';
+        require __DIR__ . '/../../View/admin/dashboardAdmin.php';
+
     }
 }

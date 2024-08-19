@@ -1,19 +1,18 @@
 <?php
 namespace Seadev\Controller;
 
-use Seadev\Metier\Utilisateur;
 use Seadev\App\Auth;
 use PDO;
 
-class AuthController {
-
+class AuthController
+{
     private PDO $pdo;
     private Auth $auth;
 
-    public function __construct(PDO $pdo)
+    public function __construct(PDO $pdo, Auth $auth)
     {
         $this->pdo = $pdo;
-        $this->auth = new Auth($pdo);
+        $this->auth = $auth;
     }
 
     public function login(): void
@@ -22,10 +21,9 @@ class AuthController {
             $email = $_POST['email'];
             $password = $_POST['password'];
 
-            $user = $this->auth->loggin($email, $password);
+            $user = $this->auth->login($email, $password);
 
             if ($user) {
-                // Redirection en fonction du rôle
                 if ($user->isAdmin()) {
                     header('Location: /admin/dashboardAdmin');
                 } else {
@@ -33,13 +31,11 @@ class AuthController {
                 }
                 exit();
             } else {
-                // Afficher la vue de connexion avec un message d'erreur
                 $error = "Identifiants incorrects.";
-                require '../views/login.php';
+                require __DIR__ . '/../../View/login.php';
             }
         } else {
-            // Afficher le formulaire de connexion
-            require '../views/login.php';
+            require __DIR__ . '/../../View/login.php';
         }
     }
 
