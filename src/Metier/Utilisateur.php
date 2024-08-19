@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace Seadev\Metier;
 
+use PDO;
 
 class Utilisateur {
 
@@ -22,6 +23,26 @@ class Utilisateur {
         $this->isAdmin  = $isAdmin;
     }
 
+
+    public static function findByEmail(PDO $pdo, string $email): ?self
+    {
+        $query = $pdo->prepare('SELECT * FROM Utilisateur WHERE email = :email');
+        $query->execute(['email' => $email]);
+        $userData = $query->fetch(PDO::FETCH_ASSOC);
+
+        if ($userData === false) {
+            return null;
+        }
+
+        return new self(
+            (int)$userData['id_utilisateur'],
+            $userData['nom'],
+            $userData['prenom'],
+            $userData['email'],
+            $userData['password'],
+            (bool)$userData['is_admin']
+        );
+    }
 /**
      * Get the value of idUser
      *

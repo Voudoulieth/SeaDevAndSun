@@ -1,31 +1,31 @@
 <?php
-require 'E:\Alexandre\Projet web\SeaDevAndSun\vendor\autoload.php';
-use Seadev\Dao\Database;
-use Seadev\App\Auth;
-use Seadev\Dao\DaoException;
+// require 'E:\Alexandre\Projet web\SeaDevAndSun\vendor\autoload.php';
+// use Seadev\Dao\Database;
+// use Seadev\App\Auth;
+// use Seadev\Dao\DaoException;
 
 session_start();
 
-if (!empty($_POST)) {
-    try {
-        $pdo = Database::getConnection();
-        $auth = new Auth($pdo);
-        $user = $auth->loggin($_POST['email'], $_POST['password']);
-        // if($user) {
-        //     header('Location: index.php');
-        // }
+// if (!empty($_POST)) {
+//     try {
+//         $pdo = Database::getConnection();
+//         $auth = new Auth($pdo);
+//         $user = $auth->loggin($_POST['email'], $_POST['password']);
+//         // if($user) {
+//         //     header('Location: index.php');
+//         // }
         
-        if ($user !== null) {
-            echo "Connexion réussie pour l'utilisateur : " . $user;
-        } else {
-            echo "Nom d'utilisateur ou mot de passe incorrect.";
-        }
-    } catch (Exception $e) {
-        echo "Erreur : " . $e->getMessage();
-    }
-}
+//         if ($user !== null) {
+//             echo "Connexion réussie pour l'utilisateur : " . $user;
+//         } else {
+//             echo "Nom d'utilisateur ou mot de passe incorrect.";
+//         }
+//     } catch (Exception $e) {
+//         echo "Erreur : " . $e->getMessage();
+//     }
+// }
 
-?><!DOCTYPE html>
+// ?><!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">

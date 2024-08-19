@@ -1,68 +1,96 @@
 <?php
 declare(strict_types=1);
-namespace seadev\App;
+namespace Seadev\App;
 
 use Seadev\Metier\Utilisateur;
 use PDO;
 
 class Auth {
     
-    private $pdo;
+    private PDO $pdo;
 
     public function __construct(PDO $pdo)
-    {
-        $this->pdo = $pdo;
-    }
+        {
+            $this->pdo = $pdo;
+        }
 
-    public function user()
-    {
-        if(session_status() === PHP_SESSION_NONE)
-            {
+    private function ensureSessionStarted(): void
+        {
+            if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
-        $id = $_SESSION['auth'] = $userData['id_utilisateur'] ?? null;
-        if($id === null){
-            return null;
+        }
+
+    public function user(): ?Utilisateur
+        {
+            $this->ensureSessionStarted();
+
+            $id = $_SESSION['auth'] ?? null;
+            if ($id === null) {
+                return null;
             }
-            $query = $this->pdo->prepare('SELECT * FROM Utilisateur WHERE id = ?');
+
+            $query = $this->pdo->prepare('SELECT * FROM Utilisateur WHERE id_utilisateur = ?');
             $query->execute([$id]);
             $userData = $query->fetch(PDO::FETCH_ASSOC);
-            return $userData ?: null;
-    }
+
+            if ($userData === false) {
+                return null;
+            }
+
+            // Retourne un objet Utilisateur
+            return new Utilisateur(
+                (int)$userData['id_utilisateur'],
+                $userData['nom'],
+                $userData['prenom'],
+                $userData['email'],
+                $userData['password'],
+                (bool)$userData['is_admin']
+            );
+        }
 
     public function loggin(string $username, string $password): ?Utilisateur
-{
-    // Trouver l'utilisateur correspondant au username
-    $query = $this->pdo->prepare('SELECT * FROM Utilisateur WHERE email = :email');
-    $query->execute(['email' => $username]);
-    
-    // Utilisation du fetch() pour obtenir un tableau associatif
-    $userData = $query->fetch(PDO::FETCH_ASSOC);
-    // var_dump($userData);
-    
-    if ($userData === false) {
-        return null;
-    }
-    
-    // Vérifier si le mot de passe est correct
-    if (password_verify($password, $userData['password'])) {
-        if(session_status() === PHP_SESSION_NONE)
-            {
-                session_start();
+        {
+            $query = $this->pdo->prepare('SELECT * FROM Utilisateur WHERE email = :email');
+            $query->execute(['email' => $username]);
+
+            $userData = $query->fetch(PDO::FETCH_ASSOC);
+
+            if ($userData === false) {
+                return null;
             }
-        $_SESSION['auth'] = $userData['id_utilisateur'];
-        
-        // Création d'un objet Utilisateur avec les données
-        return new Utilisateur(
-            (int)$userData['id_utilisateur'],
-            $userData['nom'],
-            $userData['prenom'],
-            $userData['email'],
-            $userData['password'],
-            (bool)$userData['is_admin']
-        );
-    }
-    
-    return null;
-}
+
+            if (password_verify($password, $userData['password'])) {
+                $this->ensureSessionStarted();
+                $_SESSION['auth'] = $userData['id_utilisateur'];
+
+                return new Utilisateur(
+                    (int)$userData['id_utilisateur'],
+                    $userData['nom'],
+                    $userData['prenom'],
+                    $userData['email'],
+                    $userData['password'],
+                    (bool)$userData['is_admin']
+                );
+            }
+
+            return null;
+        }
+
+    public function requireAdmin(): void
+        {
+            $user = $this->user();
+
+            if ($user === null || !$user->isAdmin()) {
+                header('Location: /auth/login');
+                exit();
+            }
+        }
+
+    public function logout(): void
+        {
+            $this->ensureSessionStarted();
+            session_unset();
+            session_destroy();
+        }
 }

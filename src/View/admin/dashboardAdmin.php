@@ -7,7 +7,7 @@ use Seadev\App\Auth;
 $pdo = Database::getConnection();
 $auth = new Auth($pdo);
 $user = $auth->user();
-if($user === null || $user->is_admin !== true){
+if($user === null || $user->isAdmin() !== true){
     header('Location: login.php?forbid=1');
     exit();
 }
