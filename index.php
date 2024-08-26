@@ -4,7 +4,8 @@ $valid_routes = [
     '/',
     '/login',
     '/logout',
-    '/admin/dashboardAdmin',
+    '/dashboardAdmin',
+    '/listeCompte',
     '/user/dashboardClient',
     '/test-route'
 ];

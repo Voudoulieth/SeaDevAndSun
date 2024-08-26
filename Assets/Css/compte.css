@@ -1,0 +1,10 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:start;
+    background-color: #D9D9D9;
+    width: 50vh;
+    color: black;
+    margin-left: 20%;
+}

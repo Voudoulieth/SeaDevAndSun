@@ -19,6 +19,6 @@ class UserController
     public function dashboard(): void
     {
         // Afficher la vue du tableau de bord utilisateur
-        require __DIR__ . '/../../View/user/dashboardClient.php';
+        require __DIR__ . '/../View/user/dashboardClient.php';
     }
 }

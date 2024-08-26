@@ -22,7 +22,17 @@ class AdminController
         $this->auth->requireAdmin();
 
         // Afficher la vue du tableau de bord admin
-        require __DIR__ . '/../../View/admin/dashboardAdmin.php';
+        require __DIR__ . '/../View/admin/dashboardAdmin.php';
+
+    }
+
+    public function comptes(): void
+    {
+        // Vérifier si l'utilisateur est admin
+        $this->auth->requireAdmin();
+
+        // Afficher la vue du tableau de bord admin
+        require __DIR__ . '/../View/admin/listeCompte.php';
 
     }
 }

@@ -25,17 +25,18 @@ class AuthController
 
             if ($user) {
                 if ($user->isAdmin()) {
-                    header('Location: /admin/dashboardAdmin');
+                    header('Location: /dashboardAdmin');
                 } else {
                     header('Location: /user/dashboardClient');
                 }
                 exit();
             } else {
                 $error = "Identifiants incorrects.";
-                require __DIR__ . '/../../View/login.php';
+
+                require __DIR__ . '/../View/login.php';
             }
         } else {
-            require __DIR__ . '/../../View/login.php';
+            require __DIR__ . '/../View/login.php';
         }
     }
 

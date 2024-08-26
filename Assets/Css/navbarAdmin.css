@@ -1,0 +1,37 @@
+.navbar {
+    background-color: #0E0B17;
+    height: 80vh;
+    width: 10%;
+    border-radius: 0 10px 10px 0;
+    position: relative;
+    top: 9vh;
+    /* left: 10px; */
+}
+
+ul {
+    padding-top: 20px;
+    padding-left: 15px;
+    list-style-type: none;
+    color: white;
+}
+
+ul li {
+    padding: 10px 0 10px 0;
+    
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a:active{
+    text-decoration:underline;
+}
+
+a:hover{
+    color: aqua;
+}
+.logout {
+    margin-top: 60vh;
+}

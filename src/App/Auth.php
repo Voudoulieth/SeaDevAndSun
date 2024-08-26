@@ -82,7 +82,7 @@ class Auth {
             $user = $this->user();
 
             if ($user === null || !$user->isAdmin()) {
-                header('Location: /auth/login');
+                header('Location: /login');
                 exit();
             }
         }

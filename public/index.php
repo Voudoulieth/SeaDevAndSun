@@ -29,15 +29,17 @@ $userController = new UserController($auth);
 
 // Définition des routes
 $router->get('/login', [$authController, 'login']);
+$router->get('/', [$authController, 'login']);
 $router->post('/login', [$authController, 'login']);
 $router->get('/logout', [$authController, 'logout']);
-$router->get('/admin/dashboardAdmin', [$adminController, 'dashboard']);
+$router->get('/dashboardAdmin', [$adminController, 'dashboard']);
+$router->get('/listeCompte', [$adminController, 'comptes']);
 $router->get('/user/dashboardClient', [$userController, 'dashboard']);
 
 // Route de débogage
-$router->get('/test-route', function() {
-    echo 'La route de test fonctionne.';
-});
+// $router->get('/test-route', function() {
+//     echo 'La route de test fonctionne.';
+// });
 
 // Lancement du routeur
 $router->run();

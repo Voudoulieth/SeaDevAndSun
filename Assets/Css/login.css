@@ -35,7 +35,7 @@ body {
     height: 600px;
     width: 1200px;
     padding: 20px;
-    background-image: url(../Assets/Image/background_login.jpg);
+    background-image: url(/Assets/Image/background_login.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

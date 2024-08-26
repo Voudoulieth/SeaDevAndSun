@@ -40,12 +40,14 @@ class Router
             [$controller, $action] = $handler;
 
             // Instancier le contrôleur avec les dépendances appropriées
-            if ($controller === AuthController::class) {
+            if ($controller instanceof AuthController) {
                 $controllerInstance = new $controller($this->pdo, $this->auth);
-            } elseif ($controller === AdminController::class || $controller === UserController::class) {
+            } elseif ($controller instanceof AdminController || $controller instanceof UserController) {
                 $controllerInstance = new $controller($this->auth);
             } else {
-                $controllerInstance = new $controller();
+                $controllerInstance = new AuthController($this->pdo, $this->auth);
+                // TODO supp le user en session 
+                $action = 'login';
             }
 
             // Appeler l'action du contrôleur

@@ -35,7 +35,8 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Votre page de connexion"/>
-    <link rel="stylesheet" href="../../Css/login.css">
+    <!-- <link rel="stylesheet" href="../../Css/login.css"> -->
+    <link rel="stylesheet" href="/Assets/Css/login.css">
     <title>Connexion</title>
 </head>
 <body>

@@ -1,19 +1,3 @@
-<?php
-require 'E:\Alexandre\Projet web\SeaDevAndSun\vendor\autoload.php';
-use Seadev\Dao\Database;
-use Seadev\App\Auth;
-
-
-$pdo = Database::getConnection();
-$auth = new Auth($pdo);
-$user = $auth->user();
-if($user === null || $user->isAdmin() !== true){
-    header('Location: login.php?forbid=1');
-    exit();
-}
-
-
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -22,10 +6,25 @@ if($user === null || $user->isAdmin() !== true){
     <link rel="stylesheet" href="/Assets/Css/dashboard.css">
     <link rel="stylesheet" href="/Assets/Css/header.css">
     <link rel="stylesheet" href="/Assets/Css/navbarAdmin.css">
+    <link rel="stylesheet" href="/Assets/Css/compte.css">
     <title>Bienvenue sur votre espace Administrateur</title>
 </head>
 <body>
     <?php include './src/View/header.php' ?>
     <?php include 'navbarAdmin.php' ?>
+
+    <div class="main">
+        <div class="tab">
+            <table class="">
+                <tr>
+                    <td> Jean luc</td>
+                    <td>Michelin</td>
+                    <td>example@exemple.com</td>
+                    <td>Crée le 15 septembre</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </body>
 </html> 
