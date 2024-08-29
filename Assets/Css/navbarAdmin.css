@@ -3,8 +3,9 @@
     height: 80vh;
     width: 10%;
     border-radius: 0 10px 10px 0;
-    position: relative;
-    top: 9vh;
+    position: fixed;
+    top: 17vh;
+    left: 0;
     /* left: 10px; */
 }
 
@@ -33,5 +34,5 @@ a:hover{
     color: aqua;
 }
 .logout {
-    margin-top: 60vh;
+    margin-top: 55vh;
 }

@@ -11,16 +11,19 @@ class Utilisateur {
     private string  $prenom;
     private string  $email;
     private string  $passWord;
+    private string $createdAt;
     private bool    $isAdmin;
 
-    public function __construct(int $idUser, string $nom, string $prenom, string $email, string $passWord, bool $isAdmin = false)
+    public function __construct(int $idUser, string $nom, string $prenom, string $email, string $passWord, string $createdAt, bool $isAdmin = false)
     {
         $this->idUser   = $idUser;
         $this->nom      = $nom;
         $this->prenom   = $prenom;
         $this->email    = $email;
         $this->passWord = $passWord;
+        $this->createdAt = $createdAt;
         $this->isAdmin  = $isAdmin;
+        
     }
 
 
@@ -40,6 +43,7 @@ class Utilisateur {
             $userData['prenom'],
             $userData['email'],
             $userData['password'],
+            $userData['create_at'],
             (bool)$userData['is_admin']
         );
     }
@@ -50,6 +54,11 @@ class Utilisateur {
      */
     public function getIdUser(): int {
         return $this->idUser;
+    }
+
+    public function getCreatedAt(): string
+    {
+        return $this->createdAt;
     }
 
     // /**
@@ -155,7 +164,7 @@ class Utilisateur {
 
     public function __toString():string
     {
-        return '[Utilisateur :'. $this->idUser . ',' . $this->nom . ','. $this->prenom . ','. $this->email . ',' . $this->passWord . ',' . ' isAdmin: ' . ($this->isAdmin ? 'true' : 'false'). ']';
+        return '[Utilisateur :'. $this->idUser . ',' . $this->nom . ','. $this->prenom . ','. $this->email . ',' . $this->passWord . ',' . ' isAdmin: ' . ($this->isAdmin ? 'true' : 'false'). $this->createdAt . ']';
     }
 }
 

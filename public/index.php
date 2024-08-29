@@ -34,6 +34,7 @@ $router->post('/login', [$authController, 'login']);
 $router->get('/logout', [$authController, 'logout']);
 $router->get('/dashboardAdmin', [$adminController, 'dashboard']);
 $router->get('/listeCompte', [$adminController, 'comptes']);
+$router->post('/listeCompte', [$adminController, 'comptes']);
 $router->get('/user/dashboardClient', [$userController, 'dashboard']);
 
 // Route de débogage

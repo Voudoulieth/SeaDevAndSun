@@ -45,6 +45,7 @@ class Auth {
                 $userData['prenom'],
                 $userData['email'],
                 $userData['password'],
+                $userData['created_at'],
                 (bool)$userData['is_admin']
             );
         }
@@ -70,6 +71,7 @@ class Auth {
                     $userData['prenom'],
                     $userData['email'],
                     $userData['password'],
+                    $userData['created_at'],
                     (bool)$userData['is_admin']
                 );
             }

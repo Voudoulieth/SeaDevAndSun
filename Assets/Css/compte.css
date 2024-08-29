@@ -1,10 +1,60 @@
 .main {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    align-items:start;
+    align-items:center;
     background-color: #D9D9D9;
-    width: 50vh;
+    margin-top: 4vh;
+    width: 70vw;
     color: black;
     margin-left: 20%;
+    z-index: 1;
+    height: 80vh;
+    border-radius: 5% 0 5% 0;
+}
+
+
+.container {
+    background-color: rgb(14, 11, 23, 30%);
+    width: 65vw;
+    height: 90%;
+    display: grid;
+    text-align: center;
+    grid-template-columns: auto;
+    grid-template-rows: 70px;
+    
+}
+
+.container_tab {
+    background-color: #D9D9D9;
+    
+}
+
+button {
+    margin: 30px;
+    padding: 5px 15px;
+    border-radius: 3px;
+    z-index: 2;
+}
+
+.masquer {
+    display: none;
+}
+
+#popup {
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    text-align: center;
+    border-radius: 5%;
+    top: 60%;
+    left: 55%;
+    height: 60%;
+    width: 40%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 1px solid black;
+    padding: 20px;
+    z-index: 1000; /* Assure-toi que la pop-up est au-dessus du contenu */
 }
